@@ -1,0 +1,219 @@
+h1,h2,em {
+  color: darkgreen;
+}
+
+h1,h2 {
+  font-size: 32px;
+}
+
+
+/** Site header */
+.site-header { 
+    border-top: 5px solid #424242;
+    border-bottom: 1px solid #e8e8e8;
+    min-height: 55.95px;
+    position: relative;
+ }
+
+.site-title { 
+    font-size: 26px;
+    font-weight: 300;
+    line-height: 54px;
+    letter-spacing: -1px;
+    margin-bottom: 0;
+    float: left;
+}
+
+.title {
+    /* 1st %line in md 
+     * font-size: 28px;
+     * */
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+.author {
+    /* 2nd %line in md */
+}
+.date {
+    /* 3rd %line in md */
+    font-style: italic;
+}
+
+.site-title, .site-title:visited { color: #424242; }
+
+.site-nav { float: right; line-height: 54px; }
+
+.site-nav .nav-trigger { display: none; }
+
+.site-nav .menu-icon { display: none; }
+
+.site-nav .page-link { color: #111; line-height: 1.5; }
+
+.page-link-active { font-weight: 700; margin-left: 20px; }
+
+.site-nav .page-link { margin-left: 20px; }
+
+@media screen and (max-width: 600px) { 
+    .site-nav { 
+        position: absolute;
+        top: 9px;
+        right: 15px;
+        background-color: #fdfdfd;
+        border: 1px solid #e8e8e8;
+        border-radius: 5px;
+        text-align: right;
+    } 
+    .site-nav label[for="nav-trigger"] { 
+        display: block;
+        float: right;
+        width: 36px;
+        height: 36px;
+        z-index: 2;
+        cursor: pointer;
+    } 
+    .site-nav .menu-icon { 
+        display: block;
+        float: right;
+        width: 36px;
+        height: 26px;
+        line-height: 0;
+        padding-top: 10px;
+        text-align: center;
+    } 
+    .site-nav .menu-icon > svg { 
+        fill: #424242;
+        }
+    .site-nav input ~ 
+    .trigger { 
+        clear: both;
+        display: none;
+    } 
+    .site-nav input:checked ~ .trigger { 
+        display: block;
+        padding-bottom: 5px;
+    } 
+    .site-nav .page-link { 
+        display: block;
+        padding: 5px 10px;
+        margin-left: 20px;
+    } 
+    .site-nav .page-link:not(:last-child) { 
+        margin-right: 0;
+    } 
+}
+
+a:link.flex-link {
+  background-repeat: no-repeat, no-repeat, no-repeat;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+/* Responsive layout - makes a one column layout instead of a two-column layout */
+@media screen and (max-width: 600px) { 
+  .flex-container {
+    flex-direction: column;
+  }
+}
+
+
+.flex-top {
+    height: 30px;
+    /* background-color: darkgreen; */
+    background: linear-gradient(to top right, lightgreen -20%, darkgreen 160%);
+    border-radius: 10px 10px 0px 0px;
+    margin: -10px;
+    margin-bottom: 15px;
+}
+
+.lab {
+    background: linear-gradient(to top right, yellow -20%, orange 160%);
+}
+
+.forensic {
+    background: linear-gradient(to top right, #ff7070 -20%, #aa2222 160%);
+}
+
+.flex-item {
+  background-color: #eeec;
+  padding:          10px;
+  margin:           10px;
+  border-radius:    10px;
+  width:           260px;
+}
+
+figure {
+  display: inline-block;
+  float: right;
+  max-width: unset;
+}
+
+figcaption {
+  max-width: 80%;
+}
+
+img {
+  float: right;
+  padding: 10px;
+  max-width: 80vw;
+  width: 250px;
+  border-radius: 20%;
+  transition: width 0.5s, position 0.5s;
+  /*transition: position 0.5s ease-in;*/
+}
+
+img.person {
+  /* float: right; 
+  padding: 10px;
+   * */
+  width: 250px;
+  border-radius: 50%;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
+img.big {
+ /* float: unset; 
+  border-color: gray;
+  border-width: 3px;
+  border-style: solid;
+  * */
+  border-radius: 20px;
+  width: 80vw;
+  transition: width 0.5s, position 0.5s;
+}
+
+
+img.preview {
+  max-height: 180px;
+  max-width: 50%;
+}
+
+/* for header */
+img.img-logo {
+  max-width: 60px;
+  padding-right: 10px;
+}
+
+/* for funder */
+img.img-right {
+  float: right;
+  max-width: 150px;
+  padding: 20px;
+}
+
+.footer {
+  display: inline-block;
+  width: inherit;
+  max-width: 700px;
+  bottom: 0px;
+  padding: 20px;
+}
+
+.footer-text {
+  font-size: 12px;
+  color: #666;
+}
+
