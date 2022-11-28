@@ -21,6 +21,10 @@ for item in glob.glob('./source/**', recursive=True):
     if item.endswith('.md'):
         print(item, "to html")
         os.system(f'pandoc -s {item} -o {target[:-3]}.html')
+    if (list(filter(item.endswith, ['.html','.svg','.php','.pdf'])) != []):
+    # if item.endswith('.html'):
+        print(item, "copy")
+        os.system(f'cp {item} {target}')
     elif os.path.isdir(item) and not os.path.exists(target):
         os.system(f'mkdir {target}')
 
@@ -154,11 +158,9 @@ for item in glob.glob(f'{root}**', recursive=True):
                 lines[i] = line
 
         href  = item.split(root)[1]
-        print(href)
         thisFoot = foot[:]
         if href.count('/') > 0:
             subLevel = "../" * href.count('/')
-            print(href, subLevel)
             for i,line in enumerate(head):
                 if href in line:
                    head[i] = line.replace('page-link','page-link-active')

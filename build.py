@@ -15,16 +15,16 @@ os.system(f'mkdir {root}')
 os.system(f'cp -rf {css} {root}')
 os.system(f'cp -rf {images} {root}')
 
-
-def getBetween(string,before,after):
-    return string.split(before)[-1].split(after)[0]
-
 # recreate the md files as html files
 for item in glob.glob('./source/**', recursive=True):
     target = item[:].replace('./source/',root)
     if item.endswith('.md'):
         print(item, "to html")
         os.system(f'pandoc -s {item} -o {target[:-3]}.html')
+    if (list(filter(item.endswith, ['.html','.svg','.php','.pdf'])) != []):
+    # if item.endswith('.html'):
+        print(item, "copy")
+        os.system(f'cp {item} {target}')
     elif os.path.isdir(item) and not os.path.exists(target):
         os.system(f'mkdir {target}')
 
