@@ -176,6 +176,15 @@ img {
   /*transition: position 0.5s ease-in;*/
 }
 
+img.icon {
+  max-width: 80vw;
+  float: unset;
+  margin: unset;
+  padding: unset;
+  border-radius: unset;
+  filter: unset;
+}
+
 img.person {
   /* float: right; 
   padding: 10px;
