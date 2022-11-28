@@ -1,0 +1,52 @@
+
+  body {
+    font-family: 'HelveticaNeue-Light', 'sans-serif';
+    margin:       0px;
+  }
+  .thumb {
+    max-height: 300px;
+    width:  100%;
+    max-width:  500px;
+    margin: 50px;
+    border: solid;
+    position: relative;
+    z-index: -1;
+  }
+  .thumbLink {
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+  }
+  .thumbSpan {
+    display: inline-block;
+  }
+  #slides {
+    position: absolute;
+    top:           30%;
+    transform: translateY(-30%);
+  }
+  .nav {
+    position: fixed;
+    background-color: #ddd;
+    width:      100%;
+    bottom:      0px;
+    padding:    10px;
+    z-index:       2;
+    }
+  .nav-item {
+    display:      inline-block;
+    background-color: #ccc;
+    color:        #fff;
+    border-radius: 4px;
+    padding-left:  2px;
+    padding-right: 2px;
+    margin:        3px;
+    z-index:       2;
+    }
+  .visited {
+    background-color: #8c8;
+  }
+  .current {
+    border:       solid;
+    border-width:  2px;
+  }
