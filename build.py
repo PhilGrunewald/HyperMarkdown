@@ -21,7 +21,7 @@ for item in glob.glob('./source/**', recursive=True):
     if item.endswith('.md'):
         print(item, "to html")
         os.system(f'pandoc -s {item} -o {target[:-3]}.html')
-    if (list(filter(item.endswith, ['.html','.svg','.php','.css','.png','.pdf'])) != []):
+    if (list(filter(item.endswith, ['.html','.svg','.php','.css','.png','jpg','.pdf'])) != []):
     # if item.endswith('.html'):
         print(item, "copy")
         os.system(f'cp {item} {target}')
@@ -102,11 +102,11 @@ for item in sorted(glob.glob(f'{root}**', recursive=True)):
             if subtext:
                 url = subitem.split('/')[-1]
                 subtext.insert(0,f"""
-                        <a class="flex-link" href="{url}">\n
                           <div class="flex-item">\n
+                        <a class="flex-link" href="{url}">\n
                             <div class="flex-top {subItemType}"></div>\n
                         <div class="flex-content">\n""")
-                subtext.append('<p><i>More ...</i></p>  </div></div></a>\n')
+                subtext.append('<p><i>More ...</i></p>  </div></a></div>\n')
                 for line in subtext:
                     flexboxes.append(line)
         if flexboxes:

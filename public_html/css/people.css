@@ -1,3 +1,10 @@
+#title-block-header {
+  padding: unset;
+  margin-top: unset;
+  min-height: unset;
+  background: unset;
+}
+
 img.flex-icon {
   max-width: 150px;
   margin: 10px;

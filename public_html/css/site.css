@@ -6,7 +6,6 @@ h1,h2 {
   font-size: 32px;
 }
 
-
 /** Site header */
 .site-header { 
     border-top: 5px solid #424242;
@@ -102,9 +101,39 @@ h1,h2 {
     } 
 }
 
+
+#title-block-header {
+  display: grid;
+  align-content: end;
+  padding: 1rem;
+  margin-top: 10rem;
+  min-height: 10rem;
+  background: #fff8;
+}
+
+img.banner {
+  min-width: 600px;
+  max-width: 1000px;
+  width: 100vw;
+  padding: unset;
+  border-radius: unset;
+  filter: unset;
+  position: absolute;
+  left: 0px;
+  z-index: -1;
+  top: 9rem;
+}
+
+
+
+
 a:link.flex-link {
   background-repeat: no-repeat, no-repeat, no-repeat;
 }
+
+
+
+
 
 .flex-container {
   display: flex;
