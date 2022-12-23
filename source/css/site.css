@@ -1,3 +1,11 @@
+body {
+  /* banner.png is local to page (specified in res/header.html) */
+  background-repeat: no-repeat;
+  background-position: 0rem 7rem;
+  background-position-x: left;
+  max-width: 600px;
+}
+
 h1,h2,em {
   color: darkgreen;
 }

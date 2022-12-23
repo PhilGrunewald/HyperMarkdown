@@ -1,8 +1,6 @@
 % About EDOL
 
-![Digital House](../img/stock/digital_house.jpg)%banner
-
-%![Heat pump](../img/stock/AdobeStock_489124590-1536x461.jpg)%banner
+%![Digital House](../img/stock/digital_house.jpg)%banner
 
 The Energy Demand Observatory and Laboratory (EDOL) is a 5-year EPSRC funded research programme (Jan 2023 – Jan 2028). 
 
