@@ -3,7 +3,7 @@ body {
   background-repeat: no-repeat;
   background-position: 0rem 7rem;
   background-position-x: left;
-  max-width: 600px;
+  max-width: 800px;
 }
 
 h1,h2,em {
@@ -12,6 +12,23 @@ h1,h2,em {
 
 h1,h2 {
   font-size: 32px;
+}
+
+button {
+    background-color: #fdfdfd;
+    border: 1px solid #e8e8e8;
+    border-radius: 1rem;
+    padding: 1rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: gray;
+}
+button:hover {
+    background-color: #dfdfdf;
+    color: white;
+
 }
 
 /** Site header */
@@ -114,7 +131,7 @@ h1,h2 {
   display: grid;
   align-content: end;
   padding: 1rem;
-  margin-top: 10rem;
+  margin-top: 6rem;
   min-height: 10rem;
   background: #fff8;
 }

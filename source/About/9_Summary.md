@@ -1,7 +1,16 @@
 % Summary
 % EDOL collects and shares demand data
 
+EDOL will establish world-class **Observatory** of 2,000 representative GB homes with high resolution, longitudinal, technical and social data disaggregated to the level of activities, appliances, and occupants. Participant and data management is led by University College London.
+The instrumentation for this Observatory will be overseen in the Department of Engineering Science at Oxford. Only instruments that meet our requirements for cost, reliability, un-intrusiveness, scalability and privacy, will get deployed in the Observatory.
+
+**Laboratories** complement the Observatory for evaluation of technologies, business models and policy interventions. These Laboratories are expected to be on a scale of 100-200 homes and give early career researchers an opportunity to lead innovative projects within the EDOL programme.
+
+**Data** from Observatory and Laboratories will be curated by _UCL_, analysed and processed to be shared with academics, policy makers and practitioners. 
+Unexplained energy demand patterns and other anomalies will be investigated in **Forensic** studies, with in-depth ethnographic instruments and in-person observations. This work is led by Oxford’s _Environmental Change Institute_.
 We use energy in our homes for heating, washing, cleaning, cooking, lighting, and powering our appliances for entertaining, socialising and interacting. Energy use is essential for our health, wellbeing, and comfort. However, domestic energy use is also responsible for almost a fifth of UK carbon emissions which have to come down to zero in the next 30 years. Energy use in homes is also the biggest driver of demand during the peak winter period which means it determines the amount, type, and cost of power generation capacity we need to have available to meet this peak. Currently, fossil fuels are often used to generate electricity to meet the extra demand for electricity during peak periods.
+
+# Research Background
 
 If the UK is to reach net-zero emissions by 2050 in line with national laws and our international commitments, we must reduce energy use in homes and stop using natural gas. Installing heat pumps and insulating homes will cost many billions of pounds when scaled up across the UK . This will happen at the same time as more electric vehicles are being charged at home, and more homes are generating and storing their own energy. It's essential we understand how these complex and overlapping changes will affect the UK's energy system. To use recent vocabulary, we need a 'track and trace' system for energy use in our homes, enabling us to understand how, why, and when domestic activity is impacting energy demand and associated carbon emissions. The data from smart meters help us understand these changes but it isn't enough to understand the complex picture that will be emerging in the near future. To understand new technologies, policies and business models that are appearing all the time, we need a much higher resolution data resource. EDOL will provide this.
 

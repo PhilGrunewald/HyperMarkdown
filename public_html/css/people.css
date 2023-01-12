@@ -5,6 +5,10 @@
   background: unset;
 }
 
+img.preview {
+    margin-left: 10rem;
+}
+
 img.flex-icon {
   max-width: 150px;
   margin: 10px;
