@@ -62,7 +62,7 @@ Short links can be declared in `res/redirect.json`:
 
 ```json
 {
-  "F1t1": "Folder1/text1.html
+  "F1t1": "Folder1/text1.html"
 }
 ```
 
