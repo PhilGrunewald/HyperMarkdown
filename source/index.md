@@ -1,19 +1,27 @@
-% EDOL
-% Energy Demand Observatory and Laboratory
+% Main Title
+% Main Author
+% Main Date
 
-%![CAPTION test](./img/stock/family.jpg)%banner
+All folders that contain a `index.html` file are included in the Menu above. Other pages can be linked like [Folder3/text1](Folder3/text1.html).
 
-The Energy Demand Observatory and Laboratory (EDOL) is a 5-year EPSRC funded research programme (1 Jan 2023 – 31 Dec 2027). 
+By adding `%box` to a markdown link, the page is linked as a box:
 
-EDOL will establish a world-class Observatory of 2,000 representative GB homes with high resolution, longitudinal, technical and social data disaggregated to the level of activities, appliances, and occupants. The overall project, participants and data management are led by University College London.
+[Folder3/text1](Folder3/text1.html)%box
 
-Alongside the Observatory, EDOL will commission several Laboratories for evaluation of technologies, business models and policy interventions. These Laboratories are expected to be on a scale of 100-200 homes and give early career researchers an opportunity to lead projects within the EDOL programme.
+Any `html` pages within the same folder are listed as boxes.
 
-The instrumentation for the Observatory is also developed in these Laboratories. Novel and innovative instruments will be rigorously tried and tested. Only solutions that satisfy requirements of reliability, value for money, data quality and privacy will be deployed at scale in the Observatory. This can involve IoT connected devices, physical sensors or other instruments, including non-intrusive methods and inferences from a variety of data sources.
+Images are presented by default
 
-Data from Observatory and Laboratories will be analysed at Oxford and processed to be shared with academics, policy makers and practitioners. 
+![Default image with caption]($img/icon.png)
 
-Unexplained energy demand patterns and other anomalies will be investigated in Forensic studies, with in-depth ethnographic instruments and in-person observations. This work is led by Oxford’s Environmental Change Institute at the School of Geography.
+or with custom style, in this case as an icon
 
+![Image caption]($img/icon.png)%icon
 
-%![Security](https://imgs.xkcd.com/comics/code_talkers.png)%icon
+Black and white
+
+![Image caption]($img/icon.png)%bw
+
+Black and white small
+
+![Image caption]($img/icon.png)%bw icon

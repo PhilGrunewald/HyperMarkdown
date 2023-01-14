@@ -3,7 +3,9 @@ body {
   background-repeat: no-repeat;
   background-position: 0rem 7rem;
   background-position-x: left;
-  max-width: 800px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 h1,h2,em {
@@ -14,6 +16,9 @@ h1,h2 {
   font-size: 32px;
 }
 
+a {
+  color: green;
+}
 button {
     background-color: #fdfdfd;
     border: 1px solid #e8e8e8;
@@ -150,15 +155,9 @@ img.banner {
 }
 
 
-
-
 a:link.flex-link {
   background-repeat: no-repeat, no-repeat, no-repeat;
 }
-
-
-
-
 
 .flex-container {
   display: flex;
@@ -182,23 +181,23 @@ a:link.flex-link {
     margin-bottom: 15px;
 }
 
-.lab {
+.A {
     background: linear-gradient(to top right, yellow -20%, orange 160%);
 }
 
-.forensic {
+.B {
     background: linear-gradient(to top right, #ff7070 -20%, #aa2222 160%);
 }
 
-.Eng {
+.C {
     background: linear-gradient(to top right, #7070ff -20%, #1010ee 160%);
 }
 
-.ECI {
+.D {
     background: linear-gradient(to top right, #70a0ff -20%, #80c0dd 160%);
 }
 
-.UCL {
+.E {
     background: linear-gradient(to top right, orange -20%, darkorange 160%);
 }
 
@@ -231,7 +230,7 @@ img {
 }
 
 img.icon {
-  max-width: 80vw;
+  max-width: 60px;
   float: unset;
   margin: unset;
   padding: unset;
@@ -239,10 +238,7 @@ img.icon {
   filter: unset;
 }
 
-img.person {
-  /* float: right; 
-  padding: 10px;
-   * */
+img.bw {
   width: 250px;
   border-radius: 50%;
   -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
@@ -250,54 +246,23 @@ img.person {
 }
 
 img.big {
- /* float: unset; 
-  border-color: gray;
-  border-width: 3px;
-  border-style: solid;
-  * */
-  border-radius: 20px;
+  max-width: unset;
   width: 80vw;
-  transition: width 0.5s, position 0.5s;
 }
 
-
-img.preview {
-  max-height: 180px;
-  max-width: 50%;
-}
-
-/* for header */
-img.img-logo {
-  max-width: 60px;
-  padding-right: 10px;
-}
-
-/* for funder */
 img.img-right {
   float: right;
-  max-width: 150px;
-  padding: 20px;
-}
-
-/* for partner logos in footer */
-img.partner {
-  float: unset;
-  width: unset;
-  border-radius: unset;
-  max-height: 60px;
+  max-width: 50px;
   padding: 20px;
 }
 
 .footer {
-  display: inline-block;
-  width: inherit;
-  max-width: 700px;
-  bottom: 0px;
-  padding: 20px;
+    color: gray;
+    display: inline-block;
+    width: 80vw;
 }
 
 .footer-text {
-  font-size: 12px;
-  color: #666;
+    font-weight: 200;
+    font-family: sans-serif
 }
-
