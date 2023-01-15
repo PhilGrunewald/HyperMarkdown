@@ -16,6 +16,7 @@ images = "./source/img"
 title = "Long title for the website"
 shorttitle = "Short title"
 
+""" COMMENT """
 
 
 def createFolder(item):
