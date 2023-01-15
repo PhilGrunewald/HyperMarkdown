@@ -219,7 +219,8 @@ def processHTML(item):
         turn links into boxes
         add links to Menu
     """
-    head = globalHead[:]
+    head = getHead(item)
+    foot = globalFoot[:]
     with open(item) as file:
         lines = file.readlines()
     body = 0
@@ -254,8 +255,6 @@ def processHTML(item):
             url = line.split('href="')[-1].split('"')[0]
             lines[i] = boxContent(f"{root}{url}")
 
-    head = getHead(item)
-    foot = globalFoot[:]
 
     head = relativeLinks(item,head)
     lines = relativeLinks(item,lines)
