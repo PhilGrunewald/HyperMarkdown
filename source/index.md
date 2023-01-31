@@ -1,9 +1,20 @@
 % EDOL
 % Energy Demand Observatory and Laboratory
 
-%![CAPTION test](./img/stock/family.jpg)%banner
+The Energy Demand Observatory and Laboratory (EDOL) collects and shares energy use data for research.
 
-The Energy Demand Observatory and Laboratory (EDOL) is a 5-year EPSRC funded research programme (1 Jan 2023 – 31 Dec 2027). 
+<div class="flex-container">
+
+[](News)%box
+
+[](About/People)%box
+
+[](Research/Observatory)%box
+
+[](Research/Labs/Heat)%box
+
+</div>
+
 
 EDOL will establish a world-class Observatory of 2,000 representative GB homes with high resolution, longitudinal, technical and social data disaggregated to the level of activities, appliances, and occupants. The overall project, participants and data management are led by University College London.
 

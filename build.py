@@ -13,8 +13,8 @@ source = "./source/"
 css    = "./source/css"
 images = "./source/img"
 
-title = "Long title for the website"
-shorttitle = "Short title"
+title = "Energy Demand Observatory & Laboratory"
+shorttitle = "EDOL"
 
 """ COMMENT """
 
@@ -48,7 +48,10 @@ def toHTML(item):
         os.system(f'cp {item} {target}')
 
 def cleanHTML(item):
-    """ tidy up html (all tags on one line) """
+    """ tidy up html 
+        - all tags on one line
+        - .md href become .html
+    """
     with open(item) as file:
         lines = file.readlines()
     newLines = []
@@ -56,16 +59,28 @@ def cleanHTML(item):
     for i,line in enumerate(lines):
         buffer = f'{buffer} {line[:-1]}'
         if line.endswith('>\n'):
+            if 'href="' in buffer:
+                buffer = buffer.replace('.md"','.html"')
             newLines.append(f'{buffer}\n')
             buffer = ''
+
     with open(item,'w') as file:
         file.writelines(newLines)
 
-def boxContent(htmlFile):
-    with open(htmlFile) as file:
-        lines = file.readlines()
-    lines.reverse()
-    url      = htmlFile.replace(root,'$')
+def boxContent(url,inner=''):
+    url = url.split(root)[-1]
+    path = ''
+    lines = ''
+    if os.path.exists(f"{root}{url}/index.html"):
+        url = f"{url}/index.html"
+    if os.path.exists(f"{root}{url}"):
+        with open(f"{root}{url}") as file:
+            lines = file.readlines()
+        lines.reverse()
+        url = f"${url}"
+        fileName = url.split("/")[-1]
+        path     = url.split(fileName)[0]
+
     dateLine = 0
     authorLine = 0
     itemType = ''
@@ -73,31 +88,44 @@ def boxContent(htmlFile):
     author   = ''
     date     = ''
     image    = ''
-    for i,line in enumerate(lines):
-        if '%type:' in line:
-            itemType = line.split('%type:')[-1].split('</p>')[0]
-        if 'class="title"' in line:
-            title = line
-            if authorLine < i-3:
-                # author does not belong to this title
-                author = ''
-            if dateLine < i-5:
-                date = ''
-        if 'class="author"' in line:
-            author = line
-            authorLine = i
-        if 'class="date"' in line:
-            date = line
-            dateLine = i
-        if ('img src=' in line): #  and not hasImage:
-            className = ''
-            if ">%" in line:
-                className = line.split('>%')[-1].split('</p>')[0]
-            if 'class=' in line:
-                line = line.replace('class="',f'class="preview {className} ')
-            else:
-                line = line.replace(' src=',f' class="preview {className}" src=')
-            image = line
+    inners = inner.split(',')
+    if inners[0]:
+        title = f'<h1 class="title">{inners[0]}</h1>'
+        if len(inners) > 1:
+            author = f'<p class="author">{inners[1]}</p>'
+        if len(inners) > 2:
+            date = f'<p class="date">{inners[2]}</p>'
+        if len(inners) > 3:
+            image = f'<p><img class="preview " src="{inners[3]}" /></p>'
+    else:
+        for i,line in enumerate(lines):
+            if '%type:' in line:
+                itemType = line.split('%type:')[-1].split('</p>')[0]
+            if 'class="title"' in line:
+                title = line
+                if authorLine < i-3:
+                    # author does not belong to this title
+                    author = ''
+                if dateLine < i-5:
+                    date = ''
+            if 'class="author"' in line:
+                author = line
+                authorLine = i
+            if 'class="date"' in line:
+                date = line
+                dateLine = i
+            if ('img src=' in line):
+                className = ''
+                if ">%" in line:
+                    className = line.split('>%')[-1].split('</p>')[0]
+                    line = f"{line.split('>%')[0]}></p>"
+                if 'class=' in line:
+                    line = line.replace('class="',f'class="preview {className} ')
+                else:
+                    line = line.replace(' src="',f' class="preview {className}" src="')
+                if not 'src="$' in line:
+                    line = line.replace(' src="',f' src="{path}')
+                image = line
     return f"""
               <div class="flex-item">
                 <a class="flex-link" href="{url}">
@@ -145,10 +173,9 @@ def replaceText(text,find,replace):
             text[i] = line.replace(find,replace)
     return text
 
-def reorderFolders(srcItems):
-    """ touch any folder listed
-        add to 'date modified'
-        to bump them up the order
+def reorderFiles(srcItems):
+    """ go through all folders
+        if `order.txt` exists add to 'date modified' to bump them up the order
     """
     for item in srcItems:
         if os.path.isdir(item):
@@ -207,6 +234,8 @@ def relativeLinks(item,text):
             text[i] = line.replace('="./',f'="{sublevel}')
         if '="$' in line:
             text[i] = line.replace('="$',f'="{sublevel}')
+        if "url('$" in line:
+            text[i] = line.replace("url('$",f"url('{sublevel}")
     return text
 
 
@@ -231,14 +260,20 @@ def processHTML(item):
         if "</body>" in line:
             end = i
         if "<p>%" in line:
+            if "type:" in line:
+                # typ = line.split("type:")[-1]
+                lines[i] = f"<!-- {line} -->\n"
             if ".css</p>" in line:
                 css = line.split("<p>%")[-1]
                 css = css.split("</p>")[0].strip()
                 head.insert(cssInsert,f'  <link rel="stylesheet" href="./css/{css}">\n')
+                lines[i] = ''
             if "banner:" in line:
                 banner = line.split("banner:")[-1].split("</p>")[0].strip()
                 head = replaceText(head,"url('banner.png')",f"url('{banner}')")
-            lines[i] = ''
+                lines[i] = ''
+            else:
+                lines[i] = ''
         if '<h1 class="title">' in line:
             title = line.split('<h1 class="title">')[1]
             title = title.split('</h1>')[0]
@@ -254,7 +289,12 @@ def processHTML(item):
             lines[i] = line
         if '</a>%box' in line:
             url = line.split('href="')[-1].split('"')[0]
-            lines[i] = boxContent(f"{root}{url}")
+            if not os.path.exists(f"{root}{url}"):
+                itemName = item.split('/')[-1]
+                itemPath = item.split(itemName)[0].split(root)[-1]
+                url = f"{itemPath}{url}"
+            inner = line.split('</a>')[0].split('>')[-1]
+            lines[i] = boxContent(url,inner)
 
 
     head = relativeLinks(item,head)
@@ -314,13 +354,17 @@ srcItems.sort(key=os.path.getmtime)
 for item in srcItems:
     toHTML(item)
 
-reorderFolders(srcItems)
 # switch to public_html
 items = glob.glob(f'{root}**', recursive=True)
 items.sort(key=os.path.getmtime)
 for item in items:
     if item.endswith('.html'):
         cleanHTML(item)
+reorderFiles(srcItems)
+
+for item in items:
+    if item.endswith('.html'):
+        # cleanHTML(item)
         addBoxes(item)
         processHTML(item)
 

@@ -264,6 +264,7 @@ img.big {
 img.preview {
   max-height: 180px;
   max-width: 50%;
+  margin-left: 50%;
 }
 
 /* for header */
