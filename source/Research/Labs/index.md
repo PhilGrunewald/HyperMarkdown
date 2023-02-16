@@ -1,4 +1,4 @@
-% EDOL Laboratories
+% Laboratories
 
 %type: lab
 

@@ -1,4 +1,4 @@
-% EDOL Forensic Labs
+% Forensic Laboratories
 % Forensic analysis for a deeper understanding of energy use
 
 %type:forensic
