@@ -12,7 +12,3 @@ EDOL uses standardised methodologies for data collection and curation to assess 
 [](Research/Forensic/index.html)%box
 
 %/flex
-
-After flex
-
-line 2
