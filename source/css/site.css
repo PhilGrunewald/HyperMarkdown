@@ -102,13 +102,12 @@ button:hover {
     border-radius: 3px;
 }
 
-.site-nav .page-link-up {
-    margin-left: 0px;
-    margin-right: 5px;
+.site-nav .folder-link {
     background: #a9c9a9;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 5px;
+    padding-top:   5px;
+    margin-right: -2px;
+    padding-right: 5px;
+    padding-left:  5px;
     border-radius: 3px;
 }
 

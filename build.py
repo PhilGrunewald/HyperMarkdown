@@ -206,8 +206,12 @@ def getHead(item):
     label = folderPath.split('/')[-2]
     navInsert = navInsertMaster
     if not label == 'public_html':
-        head.insert(navInsert,f'<a class="page-link-up" href="../"> <img class="inline" src="$img/icons/back_up.svg"> <b> {label}</b></a>\n')
-    navInsert+=1
+        folders = folderPath.split('public_html')[-1].split('/')[1:-1]
+        absFolder = '$'
+        for folder in folders:
+            head.insert(navInsert,f'<a class="folder-link" href="{absFolder}"><b>{folder}:</b></a>\n')
+            absFolder = f"{absFolder}{folder}/"
+            navInsert+=1
     # Nav: all subfolders with index.html get a menu item
     folders = glob.glob(f'{folderPath}**', recursive=False)
     folders.sort(key=os.path.getmtime)
