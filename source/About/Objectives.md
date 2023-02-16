@@ -1,4 +1,4 @@
-% EDOL objectives
+% Objectives
 % EDOL has five main objectives. 
 
 1) **sociotechnical** research for a scientific understanding of energy use

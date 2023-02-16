@@ -1,4 +1,4 @@
-% About EDOL
+% About
 % Aims, objectives and structure of the programme
 
 ![]($img/edol.svg)

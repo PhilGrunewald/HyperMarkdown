@@ -276,7 +276,6 @@ def processHTML(item):
                 lines[i] = '<div class="flex-container">\n'
             if "<p>%/flex" in line:
                 lines[i] = '</div> <!-- flex-container -->\n'
-                print(item, lines[i])
         if '<h1 class="title">' in line:
             title = line.split('<h1 class="title">')[1]
             title = title.split('</h1>')[0]
