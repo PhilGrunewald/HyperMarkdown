@@ -68,6 +68,10 @@ def cleanHTML(item):
         file.writelines(newLines)
 
 def boxContent(url,inner=''):
+    """ created html formatted box 
+        - url (can be local file or www) and 
+        - inner is comma spearated: title, author, data, image
+    """
     url = url.split(root)[-1]
     path = ''
     lines = ''
@@ -131,10 +135,10 @@ def boxContent(url,inner=''):
                 <a class="flex-link" href="{url}">
                     <div class="flex-top {itemType}"></div>
                         <div class="flex-content">
-                            {image}
                             {title}
                             {author}
                             {date}
+                            {image}
                             <p><i>More ...</i></p>
                         </div>
                     </a>
@@ -201,10 +205,8 @@ def getHead(item):
     # Nav item UP one level
     label = folderPath.split('/')[-2]
     navInsert = navInsertMaster
-    if label == 'public_html':
-        head.insert(navInsert,f'<a class="page-link" href="./"> <b>{shorttitle}</b> </a>\n')
-    else:
-        head.insert(navInsert,f'<a class="page-link" href="../"> <b>⇐ {label}</b> </a>\n')
+    if not label == 'public_html':
+        head.insert(navInsert,f'<a class="page-link-up" href="../"> <img class="inline" src="$img/icons/back_up.svg"> <b> {label}</b></a>\n')
     navInsert+=1
     # Nav: all subfolders with index.html get a menu item
     folders = glob.glob(f'{folderPath}**', recursive=False)
@@ -260,20 +262,20 @@ def processHTML(item):
         if "</body>" in line:
             end = i
         if "<p>%" in line:
-            if "type:" in line:
-                # typ = line.split("type:")[-1]
-                lines[i] = f"<!-- {line} -->\n"
+            lines[i] = f"<!-- {line[:-1]} -->\n"
+            # extract from line
             if ".css</p>" in line:
                 css = line.split("<p>%")[-1]
                 css = css.split("</p>")[0].strip()
                 head.insert(cssInsert,f'  <link rel="stylesheet" href="./css/{css}">\n')
-                lines[i] = ''
             if "banner:" in line:
                 banner = line.split("banner:")[-1].split("</p>")[0].strip()
                 head = replaceText(head,"url('banner.png')",f"url('{banner}')")
-                lines[i] = ''
-            else:
-                lines[i] = ''
+            # replace line
+            if "<p>%flex" in line:
+                lines[i] = '<div class="flex-container">\n'
+            if "<p>%/flex" in line:
+                lines[i] = '</div> <!-- flex-container -->\n'
         if '<h1 class="title">' in line:
             title = line.split('<h1 class="title">')[1]
             title = title.split('</h1>')[0]
@@ -285,17 +287,18 @@ def processHTML(item):
                 line = f"{line.split('>%')[0]}>"
             line = line.replace('<p>','')
             line = line.replace('</p>','')
-            line = line.replace(f'>',f'onclick="this.classList.toggle(\'big\');" class="{className}">\n')
+            line = line.replace(f'>',f' class="{className}">\n')
+            if className == 'toggle':
+                line = line.replace(f'toggle">',f'toggle" onclick="this.classList.toggle(\'big\')">\n')
             lines[i] = line
         if '</a>%box' in line:
             url = line.split('href="')[-1].split('"')[0]
-            if not os.path.exists(f"{root}{url}"):
+            if not url.startswith('http') and not os.path.exists(f"{root}{url}"):
                 itemName = item.split('/')[-1]
                 itemPath = item.split(itemName)[0].split(root)[-1]
                 url = f"{itemPath}{url}"
             inner = line.split('</a>')[0].split('>')[-1]
             lines[i] = boxContent(url,inner)
-
 
     head = relativeLinks(item,head)
     lines = relativeLinks(item,lines)

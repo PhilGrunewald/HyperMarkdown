@@ -1,5 +1,5 @@
-Structure.md
-Aims.md
 Summary.md
-Workpackages.md
+Aims.md
 Objectives.md
+Structure.md
+Workpackages.md

@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="../css/tufte.css">
   <link rel="stylesheet" href="../css/site.css">
   <!-- cssInsert -->
 </head>
@@ -14,7 +13,7 @@
   <div class="wrapper">
     <a class="site-title" rel="author" href="../index.html">
     <img class="img-logo" src="../img/edol.svg">
-        Energy Demand Observatory & Laboratory</a>
+        </a>
     <nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
         <label for="nav-trigger">
@@ -26,10 +25,13 @@
         </label>
 
         <div class="trigger">
-<a class="page-link" href="../"> <b>⇐ Research</b> </a>
+    <a class="site-title" rel="author" href="../index.html">
+        Energy Demand Observatory & Laboratory</a>
+    <br>
+<a class="page-link-up" href="../"> <img class="inline" src="../img/icons/back_up.svg"> <b> Research</b></a>
 <a class="page-link" href="Labs">Labs</a>
-<a class="page-link" href="Forensic">Forensic</a>
 <a class="page-link" href="Observatory">Observatory</a>
+<a class="page-link" href="Forensic">Forensic</a>
           <!-- navInsert -->
         </div>
       </nav>
@@ -37,21 +39,23 @@
 </header>
 <br>
 <!-- HeaderEnd -->
+<div class="content">
  <header id="title-block-header">
  <h1 class="title">EDOL Research</h1>
 <title>EDOL Research</title> <p class="author">Observatory, Laboratories and Forensic research</p>
  </header>
  <p>EDOL uses standardised methodologies for data collection and curation to assess the impact of policies, technologies or other effects on energy demand.</p>
+<div class="flex-container">
 
               <div class="flex-item">
                 <a class="flex-link" href="../Research/Observatory/index.html">
-                    <div class="flex-top "></div>
+                    <div class="flex-top  observatory"></div>
                         <div class="flex-content">
-                            
                              <h1 class="title">Observatory</h1>
 
-                            <title>Observatory</title> <p class="author">2000 UK households</p>
+                            <title>Observatory</title> <p class="author">A longitudinal panel of 2000 UK households</p>
 
+                            
                             
                             <p><i>More ...</i></p>
                         </div>
@@ -60,11 +64,11 @@
             
               <div class="flex-item">
                 <a class="flex-link" href="../Research/Labs/index.html">
-                    <div class="flex-top "></div>
+                    <div class="flex-top  lab"></div>
                         <div class="flex-content">
-                            
                              <h1 class="title">EDOL Laboratories</h1>
 
+                            
                             
                             
                             <p><i>More ...</i></p>
@@ -74,21 +78,24 @@
             
               <div class="flex-item">
                 <a class="flex-link" href="../Research/Forensic/index.html">
-                    <div class="flex-top "></div>
+                    <div class="flex-top forensic"></div>
                         <div class="flex-content">
-                            
                              <h1 class="title">EDOL Forensic Labs</h1>
 
                             <title>EDOL Forensic Labs</title> <p class="author">Forensic analysis for a deeper understanding of energy use</p>
 
                             
+                            
                             <p><i>More ...</i></p>
                         </div>
                     </a>
                 </div>
-            
+            </div> <!-- flex-container -->
+ <p>After flex</p>
+ <p>line 2</p>
+
+</div>  <!-- content -->
 <div class="footer">
-  <hr>
   <p class="footer-text">EDOL is a collaborative project at University College London and the University of Oxford</p>
   <img class="partner" src="../img/ucl.svg">
   <img class="partner" src="../img/ox_eci.svg">
@@ -97,4 +104,8 @@
   <a href='https://gow.epsrc.ukri.org/NGBOViewGrant.aspx?GrantRef=EP/X00967X/1'>EP/X00967X/1</a>
   <img class="img-right" src="../img/epsrc.png">
   </p>
+  <p class="footer-text">No cookies - no pesky buttons. Phew.</p>
 </div>
+
+</body>
+</html>

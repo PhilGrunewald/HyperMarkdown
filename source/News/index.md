@@ -1,6 +1,8 @@
 % News
 % Latest developments and outputs
 
+![]($img/icons/news.svg)
+
 <div class="flex-container">
 
 [](Press)%box
