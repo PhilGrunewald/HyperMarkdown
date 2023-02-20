@@ -177,22 +177,17 @@ img.banner {
   top: 9rem;
 }
 
-
-
-
 a:link.flex-link {
   background-repeat: no-repeat, no-repeat, no-repeat;
 }
 
-
-
-
-
 .flex-container {
-  display: flex;
+  width:         100%;
+  display:       flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap:     wrap;
 }
+
 /* Responsive layout - makes a one column layout instead of a two-column layout */
 @media screen and (max-width: 600px) { 
   .flex-container {
