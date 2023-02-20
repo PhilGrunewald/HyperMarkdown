@@ -7,10 +7,9 @@
 
 [](Press)%box
 
-[Presentations](Presentations/index.php)%box
-
-% second comment
-
 [](Blog/index.md)%box
 
 </div>
+
+
+[Some of Phil's slides](Slides/slides.php)
