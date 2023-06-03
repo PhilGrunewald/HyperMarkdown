@@ -394,9 +394,9 @@ for i,line in enumerate(globalFoot):
 ## MAIN ##
 # clean slate - delete all except:
 # res, src, .git and README.md
-os.system("find .. -maxdepth 1 -not -name '_res' -not -name '_src' -not -name 'README.md' -not -name '.git' -not -path '..' -exec rm -rf {} +")
-# os.system(f'rm -rf {site} && mkdir {site}')
-os.system(f'mkdir {site}')
+# os.system("find .. -maxdepth 1 -not -name '_res' -not -name '_src' -not -name 'README.md' -not -name '.git' -not -path '..' -exec rm -rf {} +")
+os.system(f'rm -rf {site} && mkdir {site}')
+# os.system(f'mkdir {site}')
 
 # process source files
 # srcItems = glob.glob(f'{src}**', recursive=True)

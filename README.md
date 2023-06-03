@@ -14,61 +14,39 @@ Project repository for website and file sharing.
 Use
 ---
 
-### Option 1:
-
-- Clone this repository
-- Checkout the `source` branch
-
-```git add remote edol edol@edol.uk:/var/www/edol.uk/.git```
-
+- Clone this repository ```git clone edol@edol.uk:/var/www/edol.uk/.git```
 - Edit files in `_src/`
-- Add, commit, push (only `_res` and `_src` folders)
+- Add, commit, push
 
-Done! The website is automatically update.
+Done! The website automatically updates at [EDOL.uk](https://edol.uk)
 
-The site is available on [EDOL.uk](https://edol.uk)
+Serve locally
+-------------
 
-### Option 2:
-
-- Clone this repository
-- check out the `site` branch (git checkout site)
-- Edit files in `source/`
-- Run `python post-update`
-- Add, commit, push origin
-
-
-- Servable files end up in repo root folder (this gets rewritten each time, so don't edit files there!)
-- Files other than `.md` get copied as are (e.g. html,js,php,css,png,svg,jpg,pdf)
+To try out the look before pushing, run ```python _res/post-update```.
+Content is generated in the `site` folder.
 
 
 Conventions
 -----------
 
 - All folders that contain an `index.md` file get listed in the menu
+- Files and folders starting with `_` are ignored
 - The first three markdown lines with a leading '%' are treated as `title, author and date`
-- Subfolders are listed as Menu items
+- The current folder and any parents are listed in the menu's top row
+- Subfolders are listed on the second row (one level deep)
 - All pages within a folder are listed as boxes
-- Everythind is ordered by `date modified` (unless specified in `order.txt` within a folder)
+- Everything is ordered by `date modified` (unless specified in `order.txt` within a folder)
+- Files other than `.md` get copied as are (e.g. html,js,php,css,png,svg,jpg,jpeg,pdf)
 
 Styling
 -------
 
-The `site.css` style is used by default. Modify this file to affect all pages or add custom css files to override/add styles for specific pages. In markdown identify the css file by adding the line
+The `_src/css/site.css` style is used by default. Modify this file to affect all pages or add custom css files to override/add styles for specific pages. In markdown identify the css file by adding the line
 
 `% custom.css`
 
 anywhere in the text.
-
-Banners
--------
-
-The file `img/banner.png` is used as default banner. 
-If a file named `banner.png` exists within a folder, this is used instead.
-If a file and a line containing:
-
->% banner: mybanner.png
-
-this image is used instead
 
 
 Cross-referencing
@@ -99,10 +77,9 @@ Short links can be declared in `res/config.json` under `Links`:
 
 now resolves to the `Folder1/text1.html` file, via a redirection file (`F1t1/index.html`)
 
-Customisations
---------------
 
-### Custom classes
+Custom classes
+--------------
 
 Classes can be added to links and images with a trailing `%`:
 
@@ -110,9 +87,21 @@ Classes can be added to links and images with a trailing `%`:
    ![Image caption]($img/navajo.png)%big
 ```
 
-Style classes are declared in `source/css/site.css` and can be modified to suit.
+Style classes are declared in `_src/css/site.css` and can be modified to suit.
 
-### Boxes
+Predefined classes include:
+
+- `right`: small image placed on the right
+- `right-up`: small image placed on the right and raised higher (to sit next to a header for example)
+- `toggle`: when clicked the image goes big/small
+- `icon`: large image with defaults removed
+- `inline`: small image
+- `person`: round and greyscale image
+- `big`: full width
+- `preview`: 150px, but at least 10% of the page width
+
+Boxes
+-----
 
 The same box layout that is applied to pages within a folder can be used for linked pages.
 
@@ -129,3 +118,18 @@ Wrapping multiple boxes between `%flex` and `%/flex` comments ensures that they 
 
  %/flex
 ```
+
+Banners
+-------
+
+Each page has a banner across the top. The default is specified in `_res/config.json` under `Banner`.
+The specified file is taken from the `_src/img` folder, unless a file with that name exists locally. To customise the **banner for an entire folder**, place a file with the same name in that folder.
+For a **single page**, add a line containing:
+
+```% banner: mybanner.png```
+
+
+# Revision history
+
+03 Jun 23: PG  v0.3 ignore files starting with `_`
+30 May 23: PG  v0.1 use git hook to build page
