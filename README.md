@@ -25,6 +25,7 @@ Serve locally
 
 To try out the look before pushing, run ```python _res/post-update```.
 Content is generated in the `site` folder.
+NOTE: there is no point editing the `site` folder. It gets re-written remotely with each push.
 
 
 Conventions
