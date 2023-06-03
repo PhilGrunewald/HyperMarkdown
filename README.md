@@ -6,8 +6,6 @@ Licence: MIT (see docs)
 Version: v0.3
 Date:    2 June 23
 
-testing 5
-
 Summary
 =======
 
@@ -27,7 +25,8 @@ Serve locally
 
 To try out the look before pushing, run ```python _res/post-update```.
 Content is generated in the `site` folder.
-NOTE: there is no point editing the `site` folder. It gets re-written remotely with each push.
+
+NOTE: DO NOT ADD the `site` folder to the repository. It is automatically generated remotely on `push`.
 
 
 Conventions
