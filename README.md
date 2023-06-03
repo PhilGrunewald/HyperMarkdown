@@ -139,7 +139,8 @@ For a **single page**, add a line containing:
 
 # Revision history
 
-
 03 Jun 23: PG  v0.4 `Links` can now also be `http` redirects
+
 03 Jun 23: PG  v0.3 ignore files starting with `_`
+
 30 May 23: PG  v0.1 use git hook to build page
