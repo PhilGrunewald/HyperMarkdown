@@ -1,0 +1,437 @@
+#!/usr/bin/env python
+
+""" Auto executed on remote push - active """
+
+import os
+import glob
+import json
+
+ROOT     = "../"
+site     = f"{ROOT}site/"
+src      = f"{ROOT}_src/"
+res      = f"{ROOT}_res/"
+header   = f"{res}header.html"
+footer   = f"{res}footer.html"
+config   = f"{res}config.json"
+links    = f"{res}links.json"
+redirect = f"{res}redirect.html"
+css      = f"{src}css"
+images   = f"{src}img"
+
+
+with open(config) as f:
+    config = json.load(f)
+banner = config['Banner']
+
+def createFolder(item):
+    """ create all folders
+        populate all folders with a banner
+        touch files to bump them up the 'date modified' order
+    """
+    # touch files to order by 'last modified'
+    target = item[:].replace(src,site)
+    os.system(f'mkdir -p {target}')
+    # add default banner
+    if not os.path.exists(f'{item}{banner}'):
+        os.system(f'cp {src}img/{banner} {target}')
+    # touch to reorder (if specified)
+    if os.path.isfile(f'{item}/order.txt'):
+        with open(f'{item}/order.txt') as file:
+            files = file.readlines()
+        for file in reversed(files):
+            os.system(f'touch {item}/{file}')
+
+def toHTML(item):
+    """ process with pandoc or just copy """
+    target = item[:].replace(src,site)
+    if item.endswith('.md'):
+        # generate HTML
+        os.system(f'pandoc -s {item} -o {target[:-3]}.html')
+    elif (list(filter(item.endswith, ['.html','.svg','.php','.css','.png','jpg','jpeg','.pdf'])) != []):
+        # Copy file
+        os.system(f'cp {item} {target}')
+
+def cleanHTML(item):
+    """ tidy up html 
+        - all tags on one line
+        - .md href become .html
+    """
+    with open(item) as file:
+        lines = file.readlines()
+    newLines = []
+    buffer = ''
+    for i,line in enumerate(lines):
+        buffer = f'{buffer} {line[:-1]}'
+        if line.endswith('>\n'):
+            if 'href="' in buffer:
+                buffer = buffer.replace('.md"','.html"')
+            newLines.append(f'{buffer}\n')
+            buffer = ''
+
+    with open(item,'w') as file:
+        file.writelines(newLines)
+
+def boxContent(url,inner=''):
+    """ created html formatted box 
+        - url (can be local file or www) and 
+        - inner is comma spearated: title, author, data, image
+    """
+    url = url.split(site)[-1]
+    path = ''
+    lines = ''
+    if os.path.exists(f"{site}{url}/index.html"):
+        url = f"{url}/index.html"
+    if os.path.exists(f"{site}{url}"):
+        with open(f"{site}{url}") as file:
+            lines = file.readlines()
+        lines.reverse()
+        url = f"${url}"
+        fileName = url.split("/")[-1]
+        path     = url.split(fileName)[0]
+
+    dateLine = 0
+    authorLine = 0
+    itemType = ''
+    title    = ''
+    author   = ''
+    date     = ''
+    image    = ''
+    inners = inner.split(',')
+    if inners[0]:
+        title = f'<h1 class="title">{inners[0]}</h1>'
+        if len(inners) > 1:
+            author = f'<p class="author">{inners[1]}</p>'
+        if len(inners) > 2:
+            date = f'<p class="date">{inners[2]}</p>'
+        if len(inners) > 3:
+            image = f'<p><img class="preview " src="{inners[3]}" /></p>'
+    else:
+        for i,line in enumerate(lines):
+            if '%type:' in line:
+                itemType = line.split('%type:')[-1].split('</p>')[0]
+            if 'class="title"' in line:
+                title = line
+                if authorLine < i-3:
+                    # author does not belong to this title
+                    author = ''
+                if dateLine < i-5:
+                    date = ''
+            if 'class="author"' in line:
+                author = line
+                authorLine = i
+            if 'class="date"' in line:
+                date = line
+                dateLine = i
+            if 'img src=' in line:
+                className = ''
+                if ">%" in line:
+                    className = line.split('>%')[-1].split('</p>')[0]
+                    line = f"{line.split('>%')[0]}></p>"
+                if 'class=' in line:
+                    line = line.replace('class="',f'class="preview {className} ')
+                else:
+                    line = line.replace(' src="',f' class="preview {className}" src="')
+                if not 'src="$' in line:
+                    line = line.replace(' src="',f' src="{path}')
+                image = line
+    return f"""
+              <div class="flex-item">
+                <a class="flex-link" href="{url}">
+                    <div class="flex-top {itemType}"></div>
+                        <div class="flex-content">
+                            {image}
+                            {title}
+                            {author}
+                            {date}
+                            <p><i>More ...</i></p>
+                        </div>
+                    </a>
+                </div>
+            """
+
+def addBoxes(item):
+    """ get the first lines in local files and add to box """
+    # append html files in this folder as boxes
+    folder = item.split("index.html")[0]
+    flexboxes = []
+    subitems = glob.glob(f'{folder}*.html')
+    subitems.sort(key=os.path.getmtime)
+    for subitem in reversed(subitems):
+        if subitem != item:
+            for line in boxContent(subitem):
+                flexboxes.append(line)
+    if flexboxes:
+        flexboxes.insert(0,'<div class="flex-container">\n')
+        flexboxes.append('</div>\n<br><br>\n')
+    with open(item) as file:
+        lines = file.readlines()
+    for i,line in enumerate(lines):
+        if "</body>" in line:
+            end = i
+    for line in flexboxes:
+        lines.insert(end,line)
+        end+=1
+    with open(item,'w') as file:
+        file.writelines(lines)
+
+def replaceText(text,find,replace):
+    """ line by line replacement """
+    for i,line in enumerate(text):
+        if find in line:
+            text[i] = line.replace(find,replace)
+    return text
+
+def reorderFiles(srcItems):
+    """ go through all folders
+        if `order.txt` exists add to 'date modified' to bump them up the order
+    """
+    for item in srcItems:
+        if os.path.isdir(item):
+            target = item[:].replace(src,site)
+            # touch to reorder (if specified)
+            if os.path.isfile(f'{item}/order.txt'):
+                with open(f'{item}/order.txt') as file:
+                    files = file.readlines()
+                for i,file in enumerate(reversed(files)):
+                    dest = f'{target}{file}'.split('\n')[0]
+                    if not os.path.isdir(dest):
+                        dest = f'{target}/{file}'.split('\n')[0]
+                        dest = dest.replace('.md','.html')
+                    # add 1s per line to mod time to move up rank
+                    if os.path.exists('/Users/'):
+                        os.system(f"touch -r {dest} -A {i:02} {dest}")
+                    else:
+                        # ubuntu is different
+                        os.system(f"touch -t '123111{i:02}' {dest}")
+
+
+def getHead(item):
+    # Links to subfolders in MENU
+    head = globalHead[:]
+    # HOME button
+    navInsert = navInsertMaster
+    head.insert(navInsert,f'<a class="folder-link" href="$">{config["Title"]}</a>\n')
+    navInsert+=1
+
+    # PARENT Folders
+    # item:     ..site/f1/f2/page.html
+    fileName = item.split('/')[-1]
+    # filename: page.html
+    fullPath = item.split(fileName)[0]
+    # fullPath: ..site/f1/f2/
+    folderPath = fullPath.split(site[:-1])[-1][1:-1]
+    # folderPath:  f1/f2
+    folders = folderPath.split('/')
+    path = '$'
+    for folder in folders:
+        path = f"{path}{folder}/"
+        if folder != "":
+            if folder == folders[-1]:
+                head.insert(navInsert,f'<a class="folder-link" href="{path}"><b>{folder}</b></a>\n')
+            else:
+                head.insert(navInsert,f'<a class="folder-link" href="{path}">{folder}</a>\n')
+            navInsert+=1
+    head.insert(navInsert,'<br><div class="navPages">')
+    navInsert+=1
+
+    # Nav: all subfolders with index.html get a menu item
+    folders = glob.glob(f'{fullPath}**', recursive=False)
+    folders.sort(key=os.path.getmtime)
+    for folder in reversed(folders):
+        if os.path.isdir(folder) and (os.path.exists(f'{folder}/index.html') or os.path.exists(f'{folder}/index.php')):
+            label = folder.split('/')[-1]
+            head.insert(navInsert,f'<a class="page-link" href="{label}">{label}</a>\n')
+            navInsert+=1
+    head.insert(navInsert,f'</div>')
+
+    return head
+
+
+def relativeLinks(item,text):
+    """ highlight current page if in Menu
+        $  > absolute path
+        ./ > relative path
+    """
+    href  = item.split(site)[1]
+    sublevel = './'
+    if href.count('/') > 0:
+        sublevel = "../" * href.count('/')
+    for i,line in enumerate(text):
+        if href in line:
+           text[i] = line.replace('page-link','page-link-active')
+        if '="./' in line:
+            text[i] = line.replace('="./',f'="{sublevel}')
+        if '="$' in line:
+            text[i] = line.replace('="$',f'="{sublevel}')
+        if "url('$" in line:
+            text[i] = line.replace("url('$",f"url('{sublevel}")
+    return text
+
+
+def processHTML(item):
+    """ line by line check of changes needed 
+        insert Header
+        update css
+        insert banner
+        format title
+        classify images
+        turn links into boxes
+        add links to Menu
+    """
+    head = getHead(item)
+    foot = globalFoot[:]
+    with open(item) as file:
+        lines = file.readlines()
+    body = 0
+    for i,line in enumerate(lines):
+        if ("<body>" in line) or ("<!-- HeaderEnd -->" in line):
+            start = i+1
+        if "</body>" in line:
+            end = i
+        if "<p>%" in line:
+            lines[i] = f"<!-- {line[:-1]} -->\n"
+            # extract from line
+            if ".css</p>" in line:
+                css = line.split("<p>%")[-1]
+                css = css.split("</p>")[0].strip()
+                head.insert(cssInsert,f'  <link rel="stylesheet" href="./css/{css}">\n')
+            if "banner:" in line:
+                local_banner = line.split("banner:")[-1].split("</p>")[0].strip()
+                head = replaceText(head,f"url({banner})",f"url('{local_banner}')")
+            # replace line
+            if "<p>%flex" in line:
+                lines[i] = '<div class="flex-container">\n'
+            if "<p>%/flex" in line:
+                lines[i] = '</div> <!-- flex-container -->\n'
+        if '<h1 class="title">' in line:
+            title = line.split('<h1 class="title">')[1]
+            title = title.split('</h1>')[0]
+            lines[i] = f"{line}<title>{title}</title>"
+        if '<img ' in line:
+            className = ''
+            if ">%" in line:
+                className = line.split('>%')[-1].split('</p>')[0]
+                line = f"{line.split('>%')[0]}>"
+            line = line.replace('<p>','')
+            line = line.replace('</p>','')
+            line = line.replace(f'>',f' class="{className}">\n')
+            if className == 'toggle':
+                line = line.replace(f'toggle">',f'toggle" onclick="this.classList.toggle(\'big\')">\n')
+            lines[i] = line
+        if '</a>%box' in line:
+            url = line.split('href="')[-1].split('"')[0]
+            if not url.startswith('http') and not os.path.exists(f"{site}{url}"):
+                itemName = item.split('/')[-1]
+                itemPath = item.split(itemName)[0].split(site)[-1]
+                url = f"{itemPath}{url}"
+            inner = line.split('</a>')[0].split('>')[-1]
+            lines[i] = boxContent(url,inner)
+
+    head = relativeLinks(item,head)
+    lines = relativeLinks(item,lines)
+    foot = relativeLinks(item,foot)
+
+    with open(item,'w') as file:
+        file.writelines(head)
+        file.writelines(lines[start:end])
+        file.writelines(foot)
+
+def shortlinks():
+    """ add folders with index.html as short link destination """
+    # short links
+    # with open(config) as f:
+    links = config["Links"]
+    # template
+    with open(redirect) as file:
+        linkMaster = file.readlines()
+    for key in links:
+        target = links[key]
+        if target.endswith('.md'):
+            target = target.replace('.md','.html')
+        thisLink = linkMaster[:]
+        thisLink = replaceText(thisLink,"$url",f"../{target}")
+        thisLink = replaceText(thisLink,"$key",key)
+        os.system(f'mkdir {site}{key}')
+        with open(f'{site}{key}/index.html','w') as file:
+            file.writelines(thisLink)
+
+## END FUNCTIONS ##
+
+## GLOBAL ##
+
+# find insertion points
+with open(header) as file:
+    globalHead = file.readlines()
+for i,line in enumerate(globalHead):
+    if "cssInsert" in line:
+        cssInsert = i
+    if "navInsert" in line:
+        navInsertMaster = i
+    if "navTitle" in line:
+        globalHead[i] = line.replace("navTitle",config["Title"])
+    if "navDescription" in line:
+        globalHead[i] = line.replace("navDescription",config["Description"])
+    if "navBanner" in line:
+        globalHead[i] = line.replace("navBanner",config["Banner"])
+    if "navURL" in line:
+        globalHead[i] = line.replace("navURL",config["URL"])
+    if "navLogo" in line:
+        globalHead[i] = line.replace("navLogo",config["Logo"])
+
+with open(footer) as file:
+    globalFoot = file.readlines()
+for i,line in enumerate(globalFoot):
+    if "navTitle" in line:
+        globalFoot[i] = line.replace("navTitle",config["Title"])
+    if "navDescription" in line:
+        globalFoot[i] = line.replace("navDescription",config["Description"])
+    if "navURL" in line:
+        globalFoot[i] = line.replace("navURL",config["URL"])
+    if "navLogo" in line:
+        globalFoot[i] = line.replace("navLogo",config["Logo"])
+
+
+## MAIN ##
+# clean slate - delete all except:
+# res, src, .git and README.md
+# os.system("find .. -maxdepth 1 -not -name '_res' -not -name '_src' -not -name 'README.md' -not -name '.git' -not -path '..' -exec rm -rf {} +")
+os.system(f'rm -rf {site} && mkdir {site}')
+# os.system(f'mkdir {site}')
+
+# process source files
+# srcItems = glob.glob(f'{src}**', recursive=True)
+srcItems = [fn for fn in glob.glob(f'{src}**', recursive=True) 
+         if not os.path.basename(fn).startswith('_')]
+
+for item in srcItems:
+    if os.path.isdir(item):
+        createFolder(item)
+# process in order of modification
+srcItems.sort(key=os.path.getmtime)
+for item in srcItems:
+    toHTML(item)
+
+# switch to public_html
+items = glob.glob(f'{site}**', recursive=True)
+items.sort(key=os.path.getmtime)
+for item in items:
+    if item.endswith('.html'):
+        cleanHTML(item)
+reorderFiles(srcItems)
+
+for item in items:
+    if item.endswith('.html'):
+        addBoxes(item)
+        processHTML(item)
+
+shortlinks()
+
+# move all files into the site
+# os.system(f'cp -r {site}/* {ROOT}')
+# os.system(f'rm -rf {site}')
+
+# update this script - fixed
+os.system(f'ln -f {res}post-update {ROOT}.git/hooks/post-update')
+os.system(f'echo `pwd`')
+os.system(f'git add -u && git commit -m "server side post-update"')
+print("post-update complete and committed")
