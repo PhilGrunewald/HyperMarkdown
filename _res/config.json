@@ -1,0 +1,16 @@
+{
+  "Title": "EDOL",
+  "Description": "Energy Demand Observatory and Laboratory",
+  "URL": "https://edol.uk",
+  "Logo": "./img/logo.png",
+  "Banner": "blue.svg",
+
+  "Links": {
+    "Team": "About/People",
+    "Tadj": "About/People/Tadj.html",
+    "Simon": "About/People/Simon.html",
+    "Gesche": "About/People/Gesche.html",
+    "Phil": "About/People/Phil.md",
+    "Marina": "About/People/Marina.html"
+  }
+}

@@ -1,21 +1,45 @@
-% Hyper-Markdown
+% EDOL Hyper-Markdown
 % Turns markdown files and folder structure into websites
 
+Author:  Phil Grunewald
+Licence: MIT (see docs)
+Version: v0.3
+Date:    2 June 23
 
 Summary
 =======
 
-A python script using [pandoc](https://pandoc.org/) to convert markdown to html. Folder structure becomes menu structure.
+Project repository for website and file sharing.
 
 Use
 ---
 
+### Option 1:
+
 - Clone this repository
+- Checkout the `source` branch
+
+```git add remote edol edol@edol.uk:/var/www/edol.uk/.git```
+
+- Edit files in `_src/`
+- Add, commit, push (only `_res` and `_src` folders)
+
+Done! The website is automatically update.
+
+The site is available on [EDOL.uk](https://edol.uk)
+
+### Option 2:
+
+- Clone this repository
+- check out the `site` branch (git checkout site)
 - Edit files in `source/`
-- Run `python build.py`
-- Servable files end up in `public_html` (this gets rewritten each time, so don't edit files there!)
+- Run `python post-update`
+- Add, commit, push origin
+
+
+- Servable files end up in repo root folder (this gets rewritten each time, so don't edit files there!)
 - Files other than `.md` get copied as are (e.g. html,js,php,css,png,svg,jpg,pdf)
-- Done
+
 
 Conventions
 -----------
@@ -50,15 +74,18 @@ this image is used instead
 Cross-referencing
 -----------------
 
-The _\$_ symbol acts are the root of the site (i.e. `public_html`). To link `source/Folder1/text1.md` use
+The _\$_ symbol acts are the root of the site. To link `source/Folder1/text1.md` use
 
 ```markdown
-  [Text 1]($Folder1/text1.html)
+  [Text 1]($Folder1/text1.md)
 ```
 
-as the url. Relative links work as normal.
+as the url from any sub-folder. Relative links work as normal. (Note that the target file ends
 
-Short links can be declared in `res/redirect.json`:
+Short links
+-----------
+
+Short links can be declared in `res/config.json` under `Links`:
 
 ```json
 {
@@ -77,17 +104,13 @@ Customisations
 
 ### Custom classes
 
-Classes can be added to links and images:
+Classes can be added to links and images with a trailing `%`:
 
 ```markdown
    ![Image caption]($img/navajo.png)%big
 ```
 
-```css
-img.big {
-  width: 100%;
-}
-```
+Style classes are declared in `source/css/site.css` and can be modified to suit.
 
 ### Boxes
 
