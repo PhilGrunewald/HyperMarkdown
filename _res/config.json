@@ -1,0 +1,12 @@
+{
+  "Title": "Hyper-Markdown",
+  "Description": "Turn markdown into a website",
+  "public_html": "docs",
+  "URL": "https://github.com/PhilGrunewald/HyperMarkdown",
+  "Logo": "./img/logo.png",
+  "Banner": "blue.svg",
+  "Links": {
+    "F4S1": "Folder4/Subfolder1/text1.md",
+    "git": "https://github.com/PhilGrunewald/HyperMarkdown"
+  }
+}
