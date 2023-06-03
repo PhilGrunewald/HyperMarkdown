@@ -6,11 +6,11 @@
   "Banner": "blue.svg",
 
   "Links": {
-    "Team": "About/People",
-    "Tadj": "About/People/Tadj.html",
-    "Simon": "About/People/Simon.html",
-    "Gesche": "About/People/Gesche.html",
-    "Phil": "About/People/Phil.md",
-    "Marina": "About/People/Marina.html"
+    "Team": "People",
+    "Tadj": "People/Tadj.html",
+    "Simon": "People/Simon.html",
+    "Gesche": "People/Gesche.html",
+    "Phil": "People/Phil.md",
+    "Marina": "People/Marina.html"
   }
 }
