@@ -216,7 +216,6 @@ a:link.flex-link {
 
 .flex-top {
   height: 10px;
-  /* background-color: darkblue; */
   background: linear-gradient(to top right, lightblue -20%, darkblue 160%);
   border-radius: 10px 10px 0px 0px;
   margin: -10px;
