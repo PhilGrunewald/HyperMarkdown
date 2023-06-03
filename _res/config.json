@@ -1,6 +1,7 @@
 {
   "Title": "EDOL",
   "Description": "Energy Demand Observatory and Laboratory",
+  "public_html": "site",
   "URL": "https://edol.uk",
   "Logo": "./img/logo.png",
   "Banner": "blue.svg",

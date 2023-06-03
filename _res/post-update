@@ -7,7 +7,6 @@ import glob
 import json
 
 ROOT     = "../"
-site     = f"{ROOT}site/"
 src      = f"{ROOT}_src/"
 res      = f"{ROOT}_res/"
 header   = f"{res}header.html"
@@ -21,6 +20,7 @@ images   = f"{src}img"
 
 with open(config) as f:
     config = json.load(f)
+site   = f"{ROOT}{config['public_html']}/"
 banner = config['Banner']
 
 def createFolder(item):
@@ -292,9 +292,9 @@ def processHTML(item):
             lines[i] = f"<!-- {line[:-1]} -->\n"
             # extract from line
             if ".css</p>" in line:
-                css = line.split("<p>%")[-1]
-                css = css.split("</p>")[0].strip()
-                head.insert(cssInsert,f'  <link rel="stylesheet" href="./css/{css}">\n')
+                cssFile = line.split("<p>%")[-1]
+                cssFile = cssFile.split("</p>")[0].strip()
+                head.insert(cssInsert,f'  <link rel="stylesheet" href="./css/{cssFile}">\n')
             if "banner:" in line:
                 local_banner = line.split("banner:")[-1].split("</p>")[0].strip()
                 head = replaceText(head,f"url({banner})",f"url('{local_banner}')")
