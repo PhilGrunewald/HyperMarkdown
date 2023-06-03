@@ -371,15 +371,21 @@ for i,line in enumerate(globalHead):
     if "navInsert" in line:
         navInsertMaster = i
     if "navTitle" in line:
-        globalHead[i] = line.replace("navTitle",config["Title"])
+        if "Logo" in config:
+            globalHead[i] = ""
+        else:
+            globalHead[i] = line.replace("navTitle",config["Title"])
+    if "navLogo" in line:
+        if "Logo" in config:
+            globalHead[i] = line.replace("navLogo",config["Logo"])
+        else:
+            globalHead[i] = ""
     if "navDescription" in line:
         globalHead[i] = line.replace("navDescription",config["Description"])
     if "navBanner" in line:
         globalHead[i] = line.replace("navBanner",config["Banner"])
     if "navURL" in line:
         globalHead[i] = line.replace("navURL",config["URL"])
-    if "navLogo" in line:
-        globalHead[i] = line.replace("navLogo",config["Logo"])
 
 with open(footer) as file:
     globalFoot = file.readlines()
@@ -429,9 +435,6 @@ for item in items:
 
 shortlinks()
 
-# move all files into the site
-# os.system(f'cp -r {site}/* {ROOT}')
-# os.system(f'rm -rf {site}')
 
 # update this script - fixed
 os.system(f'ln -f {res}post-update {ROOT}.git/hooks/post-update')
