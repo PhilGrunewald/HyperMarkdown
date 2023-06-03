@@ -349,7 +349,10 @@ def shortlinks():
         if target.endswith('.md'):
             target = target.replace('.md','.html')
         thisLink = linkMaster[:]
-        thisLink = replaceText(thisLink,"$url",f"../{target}")
+        if target.startswith('http'):
+            thisLink = replaceText(thisLink,"$url",target)
+        else:
+            thisLink = replaceText(thisLink,"$url",f"../{target}")
         thisLink = replaceText(thisLink,"$key",key)
         os.system(f'mkdir {site}{key}')
         with open(f'{site}{key}/index.html','w') as file:
