@@ -4,7 +4,7 @@
 Author:  Phil Grunewald
 Licence: MIT (see docs)
 Version: v0.3
-Date:    2 June 23
+Date:    3 June 23
 
 Summary
 =======
