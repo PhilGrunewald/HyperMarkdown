@@ -1,9 +1,13 @@
-% EDOL Hyper-Markdown
-% Turns markdown files and folder structure into websites
+# EDOL Hyper-Markdown
+
+Turns markdown files and folder structure into websites
 
 Author:  Phil Grunewald
+
 Licence: MIT (see docs)
+
 Version: v0.4
+
 Date:    3 June 23
 
 Summary
