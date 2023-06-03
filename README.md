@@ -6,7 +6,7 @@ Licence: MIT (see docs)
 Version: v0.3
 Date:    2 June 23
 
-testing
+testing 2
 
 Summary
 =======

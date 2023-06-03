@@ -432,5 +432,5 @@ shortlinks()
 
 # update this script - fixed
 os.system(f'ln -f {res}post-update {ROOT}.git/hooks/post-update')
-os.system(f'git add {site} && git commit -m "server side post-update")')
+os.system(f'git add {site} && git commit -m "server side post-update"')
 print("post-update complete and committed")
