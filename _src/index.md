@@ -3,8 +3,6 @@
 
 The Energy Demand Observatory and Laboratory (EDOL) collects and shares energy use data for research.
 
-Enjoy.
-
 %flex
 
 [](News)%box
