@@ -1,6 +1,6 @@
 % News
 % Latest developments and outputs
-% bob
+
 ![]($img/icons/news.svg)%right-up
 
 
