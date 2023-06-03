@@ -432,3 +432,4 @@ shortlinks()
 
 # update this script - fixed
 os.system(f'ln -f {res}post-update {ROOT}.git/hooks/post-update')
+print("post-update complete")
